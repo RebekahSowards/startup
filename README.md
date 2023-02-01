@@ -31,3 +31,6 @@ Assignments:
 4. Startup Specification
     - For this assignment I wrote up an elevator pitch for my webapp idea, Community Cookbook.
     - I also made a simple mockup of one of the pages of my webapp. More to come.
+5. EC2
+    - For this assignment I created an EC2 instance, so I now have a running server!
+    - SSH command: `ssh -i [keypair] ubuntu@18.219.86.195`
