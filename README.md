@@ -34,3 +34,10 @@ Assignments:
 5. EC2
     - For this assignment I created an EC2 instance, so I now have a running server!
     - SSH command: `ssh -i [keypair] ubuntu@18.219.86.195`
+6. Route 53
+    - It was really easy to register a domain name. Picking a good one is probably the hardest part most of the time.
+    - In order to get my domain name connected to my server, I had to create an A record redirecting it to the IP address of my server.
+    - A second A record with a wildcard character redirects all the subdomains.
+7. Caddy
+    - I'm not actually 100% sure how the Caddyfile works (I'd have to dig in more to the syntax to know what I did)
+    - But in the meantime, I'm serving a secure connection to my server!
