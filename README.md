@@ -41,3 +41,6 @@ Assignments:
 7. Caddy
     - I'm not actually 100% sure how the Caddyfile works (I'd have to dig in more to the syntax to know what I did)
     - But in the meantime, I'm serving a secure connection to my server!
+8. Simon HTML
+    - HTML is a language for expressing the structure of content.
+    - See https://github.com/RebekahSowards/simon for some examples of HTML.
