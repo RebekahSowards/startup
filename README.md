@@ -1,21 +1,21 @@
 # startup
 My startup project for BYU CS 260 (Web Programming)
 
-Community Cookbook is a recipe organizing and sharing webapp, where you can keep a record of recipes you have made, how much time they actually took,how much they cost, whether they were worth making again, etc.
-We all use online recipes, but they're difficult to keep track of, and Pinterest doesn't show all of the information you want to see about them. 
-With Community Cookbook you can follow recipe creators (food bloggers) to see their newest recipes, and you can also add friends to see their recipe collections.
-Everyone knows that the worst part of being an adult is choosing what to eat for dinner every day for the rest of your life. Community Cookbook takes some of that work away by creating a record of things you have made, things other cooks you trust have made, and how much time/effort is actually required to make those things. Make meal planning easier with Community Cookbook.
+The Peoria Area Community Festival of Nativities is a non-profit organization dedicated to creating an experience that allows people to reflect on the Savior in their observance of Christmas.
+People living in the Peoria area and elsewhere lend their nativities to be displayed at the festival. 
+I intend to create a website with an organized, integrated nativity registration and volunteer experience.
+The main goals:
+1. Maintainability -- The people who will be in charge of maintaining the website over time do not have in-depth knowledge of programming and need easy tools to maintain the site.
+2. Easy to use -- Many people with varying levels of comfort with technology provide nativities and volunteer hours for the festival, ad the website needs to be accessible for all of them.
 
-![Community Cookbook mockup](/assets/images/mockup0.jpg)
+![Nativity Registration Page mockup](/assets/images/mockup1.jpg)
 
 Key Features:
- - Recipes organized in a cookbook on your personal page
- - Add key details to recipes such as time to make, expense, comments, and tags
- - Tags (dinner, dessert, extra fast, very cheap, etc.) to help you pick recipes based on what you need
- - Add friends to see their cookbooks
- - Review recipes you have made to contribute to the online conversation
- - Add custom recipes (not from external sites) to share your family-favorite recipes with friends
-
+ - Personalized nativity dashboard with all registered nativities, important dates, and to-dos. 
+ - Administrator-specific pages to do things like send emails, retrieve information about all registered nativities, etc.
+ - Button-activated scripts to perform key administrator tasks.
+   + (I don't know yet what all of these tasks will be, and I need to talk to my mom about what features she needs. At least one of them will be to switch the website from an active mode to a dormant mode. Because the Community Festival of Nativities is a seasonal event, many of the features of the website should only be accessible for part of the year, especially if a reduced version of the server will have a lower operating cost in off-season months.)
+   
 Good documentation is essential to a successful project.
 Clear instructions make assignments easier to complete.
 
