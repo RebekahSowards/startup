@@ -1,0 +1,156 @@
+body {
+    display: block;
+    flex-direction: column;
+    margin: 0;
+    height: 100vh;
+}
+  
+header {
+    background-color: white;
+    border: 8px solid rgb(237, 232, 216);
+    display: flex;
+}
+
+header img {
+    padding: 8px 20px;
+    width: 30%
+}
+
+#navbar menu {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    width: 50%;
+    display: flex;
+    align-items: center;
+    font-size: 28px;
+}
+
+#navbar li {
+    flex: 1;
+    list-style: none;
+    text-align: center;
+}
+
+  #navbar a {
+      color: black;
+      text-decoration: none;
+      padding: 28px;
+  }
+
+
+  #volunteer {
+      position: relative;
+  }
+  
+  .dropdown {
+      background-color: rgb(237, 232, 216);
+      padding: 1em 0;
+      position: absolute;
+      display: none;
+      border-radius: 8px;
+      top: 35px;
+      width: max-content;
+  }
+
+#volunteer li {
+          text-align: left;
+
+}
+  
+  #navbar a:hover {
+      color: black;
+  }
+  
+  li:hover {
+      background-color: rgb(237, 232, 216);
+      border-radius: 8px;
+  }
+
+  
+  #volunteer:hover .dropdown {
+      display: block;
+  }
+  
+  #volunteer li {
+      margin: 8px 0;
+  }
+
+  footer {
+      background: hsl(180, 10%, 10%);
+      height: 30px;
+      transform: translate(0px, 650px);
+  }
+  
+
+  main {
+      display: flex;
+      flex-direction: column;
+  }
+  
+#gallery_header {
+    display: block;
+    width: 50vw;
+    height: auto;
+    margin: 35px auto;
+}
+
+#gallery_header img {
+    margin: auto;
+    display: block;
+}
+
+#gallery_header p {
+    font-size: 24px;
+    text-align: center;
+}
+
+#gallery {
+    position: absolute;
+    top: 500px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    width: 50vw;
+    display: grid;
+    grid-auto-flow: column;
+    scroll-snap-type: x mandatory;
+    overflow-x: scroll;
+    
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+#gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery_item {
+    scroll-snap-align: start;
+    margin: auto;
+    width: 50vw;
+    justify-content: center;
+}
+
+.gallery_item p {
+    position: absolute;
+    bottom: 0;
+    padding: 8px 0px;
+    margin: 0px;
+    width: 50vw;
+    opacity: 0.7;
+    background: aliceblue;
+    display: grid;
+}
+
+.gallery_item span {
+    font-family: sans serif;
+    font-size: 14px;
+    padding: 8px 16px;
+    text-align: right;
+}
+
+#gallery img {
+    max-width: 50vw;
+    margin: auto;
+    display: block;
+}
