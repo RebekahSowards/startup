@@ -9,7 +9,7 @@
     </head>
     <body>
         <header>
-            <div><img src="nativity_festival_logo.jpg"></img></div>
+            <div><a href="index.html"><img src="nativity_festival_logo.jpg"/></a></div>
             <nav id="navbar">
                 <menu>
                     <li><a href="index.html">Home</a></li>
@@ -27,10 +27,12 @@
                 </menu>
             </nav>
         </header>
-        <main>
-            <h2>Get Involved</h2>
-            <p>As the largest volunteer Christmas event in central Illinois, the Community Festival of Nativities is made possible by the volunteer efforts of community members. If you would like to get involved, please consider helping us with setup or as a host this year.</p>
-            <form>
+        <main id="volunteer">
+            <div id="volunteer_about">
+                <h1>Get Involved</h1>
+                <p>As the largest volunteer Christmas event in central Illinois, the Community Festival of Nativities is made possible by the volunteer efforts of community members. If you would like to get involved, please consider helping us with setup or as a host this year.</p>
+            </div>
+            <div id="volunteer_form">
                 <form action="formSubmit.html" method="post">
                     <ul>
                         <li>
@@ -63,12 +65,12 @@
                                 <option>Additional Church Distinction or Other</option>
                                 <option>The Church of Jesus Christ of Latter-day Saints</option>
                                 <option>None</option>
-                        </select>
-                    </li>
-                    <!--  These should pop up as a second drop-down if they select The Church of Jesus Christ of Latter-day Saints  <option>Bloomington Ward</option>
-                    <li>
-                        <label for="select">Ward or Branch:</label>
-                        <select>
+                            </select>
+                        </li>
+                        <!--  These should pop up as a second drop-down if they select The Church of Jesus Christ of Latter-day Saints  <option>Bloomington Ward</option>
+                        <li>
+                            <label for="select">Ward or Branch:</label>
+                            <select>
                                 <option>Bloomington-Normal Branch (Spanish)</option>
                                 <option>Canton Branch</option>
                                 <option>Galesburg Ward</option>
@@ -79,19 +81,20 @@
                                 <option>Pekin Ward</option>
                                 <option>Peoria Ward</option>
                                 <option>Pontiac Branch</option>
-                        </select>
-                    </li> -->
-                    <li>
-                        <label for="select">Shift Type:</label>
-                        <select id="select" name="varSelect">
-                            <option>Set Up</option>
-                            <option>Host</option>
-                        </select>
-                    </li>
-                    <!-- Available shifts should appear based on what they have selected in the box above -->
-                </ul>
-                <button type="submit">Submit</button>
-            </form>
+                            </select>
+                        </li> -->
+                        <li>
+                            <label for="select">Shift Type:</label>
+                            <select id="select" name="varSelect">
+                                <option>Set Up</option>
+                                <option>Host</option>
+                            </select>
+                        </li>
+                        <!-- Available shifts should appear based on what they have selected in the box above -->
+                    </ul>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
         </main>
         <footer>
 
