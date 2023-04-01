@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, inital-scale=1.0" />
+        <title>Community Festival of Nativities</title>
+        <link rel="icon" href="favicon.ico" />
+        <link rel="stylesheet" href="main.css" />
+    </head>
+    <body>
+        <header>
+            <div><img src="nativity_festival_logo.jpg"></img></div>
+            <nav id="navbar">
+                <menu>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li id="volunteer">
+                      <a href="volunteer.html">Get Involved</a>
+                      <ul class="dropdown">
+                        <li><a href="nativity-landing.html">Nativities</a></li>
+                        <li><a href="music.html">Musical Performances</a></li>
+                        <li><a href="volunteer.html">Event Volunteers</a></li>
+                        <li><a href="poinsettias.html">Poinsettias</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                </menu>
+            </nav>
+        </header>
+        <main>
+            <body>
+                <h1>Volunteer to Perform</h1>
+                <h3>Music at the Peoria Area Community Festival of Nativities is provided by local professional, amateur, and student performers. If you would like to be considered to perform at 7th annual Peoria Area Community Festival of Nativities, provide your information and availability below. Musical selections should be arrangements of sacred Christmas music, but can be in any style or instrumentation. Musical acts will be considered as we receive them until our performance schedule has been filled. Please contact our music coordinator at <span class="email-address">pacfn_music@gmail.com</span> with any questions.</h3>
+                <form action="formSubmit.html" method="post">
+                  <ul>
+                    <li>
+                      <!-- Includes validation-->
+                      <label for="text">Name: </label>
+                      <input type="text" id="text" name="varText" placeholder="text here" />
+                    </li>
+                    <li>
+                      <label for="email">Email: </label>
+                      <input type="email" id="email" name="varEmail" />
+                    </li>
+                    <li>
+                      <label for="tel">Phone Number: </label>
+                      <input type="tel" id="tel" name="varTel" placeholder="###-####" pattern="\d{3}-\d{4}" />
+                    </li>
+                    <li>
+                      <label for="textarea">Performer Description: </label>
+                      <textarea id="textarea" name="varTextarea" placeholder="e.g. flute solo, string quartet, vocal solo, choir"></textarea>
+                    </li>
+                    <li>
+                      <label for="select">Preferred Performance Duration: </label>
+                      <select id="select" name="varSelect">
+                        <option>30 minutes</option>
+                        <option selected>1 hour</option>
+                        <option>>1 hour</option>
+                      </select>
+                    </li>
+                    <li>
+                      <fieldset>
+                        <legend>Friday</legend>
+                        <label for="checkbox1">checkbox1</label>
+                        <input type="checkbox" id="checkbox1" name="varCheckbox" value="checkbox1" checked />
+                        <label for="checkbox2">checkbox2</label>
+                        <input type="checkbox" id="checkbox2" name="varCheckbox" value="checkbox2" />
+                        <label for="checkbox3">checkbox3</label>
+                        <input type="checkbox" id="checkbox3" name="varCheckbox" value="checkbox3" />
+                      </fieldset>
+                    </li>
+                          <li>
+                      <fieldset>
+                        <legend>Saturday</legend>
+                        <label for="checkbox1">checkbox1</label>
+                        <input type="checkbox" id="checkbox1" name="varCheckbox" value="checkbox1" checked />
+                        <label for="checkbox2">checkbox2</label>
+                        <input type="checkbox" id="checkbox2" name="varCheckbox" value="checkbox2" />
+                        <label for="checkbox3">checkbox3</label>
+                        <input type="checkbox" id="checkbox3" name="varCheckbox" value="checkbox3" />
+                      </fieldset>
+                    </li>
+                          <li>
+                      <fieldset>
+                        <legend>Sunday</legend>
+                        <label for="checkbox1">checkbox1</label>
+                        <input type="checkbox" id="checkbox1" name="varCheckbox" value="checkbox1" checked />
+                        <label for="checkbox2">checkbox2</label>
+                        <input type="checkbox" id="checkbox2" name="varCheckbox" value="checkbox2" />
+                        <label for="checkbox3">checkbox3</label>
+                        <input type="checkbox" id="checkbox3" name="varCheckbox" value="checkbox3" />
+                      </fieldset>
+                    </li>
+                </ul>
+            </form>
+        </body>
+        </main>
+        <footer>
+
+        </footer>
+    </body>
+</html>

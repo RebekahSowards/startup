@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, inital-scale=1.0" />
+        <title>Community Festival of Nativities</title>
+        <link rel="icon" href="favicon.ico" />
+        <link rel="stylesheet" href="main.css" />
+    </head>
+    <body>
+        <header>
+            <div><img src="nativity_festival_logo.jpg"></img></div>
+            <nav id="navbar">
+                <menu>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li id="volunteer">
+                      <a href="volunteer.html">Get Involved</a>
+                      <ul class="dropdown">
+                        <li><a href="nativity-landing.html">Nativities</a></li>
+                        <li><a href="music.html">Musical Performances</a></li>
+                        <li><a href="volunteer.html">Event Volunteers</a></li>
+                        <li><a href="poinsettias.html">Poinsettias</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                </menu>
+            </nav>
+        </header>
+        <main>
+            <h2>Get Involved</h2>
+            <p>As the largest volunteer Christmas event in central Illinois, the Community Festival of Nativities is made possible by the volunteer efforts of community members. If you would like to get involved, please consider helping us with setup or as a host this year.</p>
+            <form>
+                <form action="formSubmit.html" method="post">
+                    <ul>
+                        <li>
+                            <label for="text">First Name: </label>
+                            <input type="text" id="text" name="varText" placeholder="text here" />
+                        </li>
+                        <li>
+                            <label for="text">Last Name: </label>
+                            <input type="text" id="text" name="varText" placeholder="text here" />
+                        </li>
+                        <li>
+                            <label for="text">Phone Number: </label>
+                            <input type="text" id="text" name="varText" placeholder="text here" />
+                        </li>
+                        <li>
+                            <label for="text">Email Address: </label>
+                            <input type="text" id="text" name="varText" placeholder="text here" />
+                        </li>
+                        <li>
+                            <label for="select">Church Affiliation:</label>
+                            <select id="select" name="varSelect">
+                                <option>St. Vincent de Paul Catholic Church</option>
+                                <option>All Saints Greek Orthodox Church</option>
+                                <option>Holy Family Catholic Church</option>
+                                <option>Peoria Heights Congregational Church</option>
+                                <option>Blessed Sacrament Catholic Church</option>
+                                <option>St. Jude Catholic Church</option>
+                                <option>St. Mark's Catholic Church</option>
+                                <option>Catholic</option>
+                                <option>Additional Church Distinction or Other</option>
+                                <option>The Church of Jesus Christ of Latter-day Saints</option>
+                                <option>None</option>
+                        </select>
+                    </li>
+                    <!--  These should pop up as a second drop-down if they select The Church of Jesus Christ of Latter-day Saints  <option>Bloomington Ward</option>
+                    <li>
+                        <label for="select">Ward or Branch:</label>
+                        <select>
+                                <option>Bloomington-Normal Branch (Spanish)</option>
+                                <option>Canton Branch</option>
+                                <option>Galesburg Ward</option>
+                                <option>Havana Branch</option>
+                                <option>Kewanee Branch</option>
+                                <option>Morton Ward</option>
+                                <option>Normal Ward</option>
+                                <option>Pekin Ward</option>
+                                <option>Peoria Ward</option>
+                                <option>Pontiac Branch</option>
+                        </select>
+                    </li> -->
+                    <li>
+                        <label for="select">Shift Type:</label>
+                        <select id="select" name="varSelect">
+                            <option>Set Up</option>
+                            <option>Host</option>
+                        </select>
+                    </li>
+                    <!-- Available shifts should appear based on what they have selected in the box above -->
+                </ul>
+                <button type="submit">Submit</button>
+            </form>
+        </main>
+        <footer>
+
+        </footer>
+    </body>
+</html>
