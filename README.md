@@ -44,3 +44,7 @@ Assignments:
 8. Simon HTML
     - HTML is a language for expressing the structure of content.
     - See https://github.com/RebekahSowards/simon for some examples of HTML.
+9. Startup HTML and CSS
+    - I did these two assignments together, because I found that I didn't fully understand what I needed in my HTML until I was trying to style it.
+    - I found it easier to style the window at the size I had and then add reactive styling.
+    - It's easy to spend a lot longer on styling than you think you need; make incremental goals and take small steps (and don't get too sucked in).
