@@ -3,7 +3,86 @@ body {
     margin: 0;
     height: 100vh;
 }
+
+#hamburger_navbar:hover .hamburger_dropdown {
+    display: block;
+    position: relative;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+
+#hamburger_navbar {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    top: 20px;
+}
+
+.hamburger_dropdown {
+    background: rgb(237, 232, 216);
+    padding: 0;
+    position: absolute;
+    border-radius: 8px;
+    top: 35px;
+    width: max-content;
+    display: none;
+}
+
+.hamburger_dropdown menu {
+    padding: 10px;
+}
+
+.hamburger_dropdown a {
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.hamburger_dropdown li {
+    margin: auto;
+    padding: 10px;
+    justify-self: left;
+    text-align: left;
+    list-style: none;
+}
+
+.hamburger_dropdown li:hover {
+    background: white;
+    border-radius: 8px;
+}
+
+.hamburger_dropdown .dropdown {
+    transform: translate(10em, -40px);
+}
+
+#menu_symbol {
+    width: fit-content;
+    margin: auto;
+    padding: 0px 20px 10px 20px;
+    font-size: 50px;
+    display: none;
+}
+
+#menu_symbol:hover {
+    background: rgb(237, 232, 216);
+    border-radius: 8px;
+}
   
+@media (orientation: portrait) {
+    #navbar {
+        display: none;
+    }
+    
+    #menu_symbol {
+        display: block;
+    }
+}
+
 header {
     background-color: white;
     border: 8px solid rgb(237, 232, 216);
@@ -31,12 +110,13 @@ header img {
 
 #navbar menu {
     position: absolute;
+    height: 50px;
     left: 50%;
     transform: translate(-50%, 0%);
     width: 50%;
     display: flex;
     align-items: center;
-    font-size: 28px;
+    font-size: 1.48vw;
 }
 
 #navbar li {
@@ -48,7 +128,8 @@ header img {
 #navbar a {
     color: black;
     text-decoration: none;
-    padding: 28px;
+    padding: 1.4vw;
+    align-items: center;
 }
 
 #volunteer {
@@ -69,12 +150,8 @@ header img {
     text-align: left;
 }
   
-#navbar a:hover {
-    color: black;
-}
-  
 #navbar li:hover {
-    background-color: rgb(237, 232, 216);
+    background: rgb(237, 232, 216);
     border-radius: 8px;
 }
 
@@ -88,10 +165,6 @@ header img {
   
 #volunteer li {
     margin: 8px;
-}
-
-#user_display {
-     right;
 }
 
 footer {
@@ -229,7 +302,8 @@ main {
 /* gallery */
 #gallery_header {
     display: block;
-    width: 50vw;
+    width: 100vw;
+    height:-moz-fit-content;
     height: auto;
     margin: 35px auto;
 }
@@ -237,6 +311,7 @@ main {
 #gallery_header img {
     margin: auto;
     display: block;
+    max-width: 100vw;
 }
 
 #gallery_header p {
@@ -295,6 +370,24 @@ main {
     display: block;
 }
 
+@media (orientation: portrait) {
+    #gallery {
+        width: 80vw;
+    }
+    
+    .gallery_item {
+        width: 80vw;
+    }
+    
+    .gallery_item p {
+        width: 80vw;
+    }
+    
+    #gallery img {
+        max-width: 80vw;
+    }
+}
+
 
 
 /* about */
@@ -317,6 +410,39 @@ main {
     align-items: center;
     margin: 24px;
     margin-right: 100px;
+}
+
+@media (orientation: portrait) {
+    #about {
+        display: grid;
+    }
+    
+    #about_left {
+        z-index: 0;
+    }
+    
+    #about_left img {
+        width: 100%;
+        left: 0;
+        top: 120px;
+        opacity: 30%;
+        position: absolute;
+        z-index: 0;
+    }
+    
+    #about_right {
+        width: 80vw;
+        margin: auto;
+        z-index: 990;
+    }
+    
+    #about_right p {
+        width: 80vw;
+    }
+    
+    #about_right img {
+        max-width: 100%;
+    }
 }
 
 
