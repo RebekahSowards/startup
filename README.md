@@ -48,3 +48,7 @@ Assignments:
     - I did these two assignments together, because I found that I didn't fully understand what I needed in my HTML until I was trying to style it.
     - I found it easier to style the window at the size I had and then add reactive styling.
     - It's easy to spend a lot longer on styling than you think you need; make incremental goals and take small steps (and don't get too sucked in).
+10. Simon JS
+    - Every script must be linked in a <script/> tag so that the HTML can find the code to connect to.
+    - Everything you want to change has to be found in the DOM somehow, good unique tags are the easiest way to do that.
+    - Tables are easy to make! That will make some aspects of my life a lot easier!
