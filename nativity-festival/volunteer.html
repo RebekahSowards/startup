@@ -4,6 +4,9 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, inital-scale=1.0" />
         <title>Community Festival of Nativities</title>
+
+        <script src="volunteer.js"></script>
+
         <link rel="icon" href="favicon.ico" />
         <link rel="stylesheet" href="main.css" />
     </head>
@@ -73,7 +76,7 @@
                         </li>
                         <li>
                             <label for="select">Church Affiliation:</label>
-                            <select id="select" name="varSelect">
+                            <select id="select" name="varSelect" onchange="churchChange()">
                                 <option>St. Vincent de Paul Catholic Church</option>
                                 <option>All Saints Greek Orthodox Church</option>
                                 <option>Holy Family Catholic Church</option>
@@ -87,10 +90,11 @@
                                 <option>None</option>
                             </select>
                         </li>
-                        <!--  These should pop up as a second drop-down if they select The Church of Jesus Christ of Latter-day Saints  <option>Bloomington Ward</option>
-                        <li>
+                        <!--  These should pop up as a second drop-down if they select The Church of Jesus Christ of Latter-day Saints -->
+                        <li hidden id="wardSelect">
                             <label for="select">Ward or Branch:</label>
                             <select>
+                                <option>Bloomington Ward</option>
                                 <option>Bloomington-Normal Branch (Spanish)</option>
                                 <option>Canton Branch</option>
                                 <option>Galesburg Ward</option>
@@ -102,7 +106,7 @@
                                 <option>Peoria Ward</option>
                                 <option>Pontiac Branch</option>
                             </select>
-                        </li> -->
+                        </li>
                         <li>
                             <label for="select">Shift Type:</label>
                             <select id="select" name="varSelect">
