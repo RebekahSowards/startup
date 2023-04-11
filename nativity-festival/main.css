@@ -491,9 +491,9 @@ main {
 
 
 /* music */
-#music label,input {
-  display:flex;
-  flex-direction:column;
+#music label, input {
+  display: flex;
+  flex-direction: column;
 }
 
 #music_about {
@@ -526,7 +526,7 @@ main {
 
 
 /* volunteer */
-#volunteer label,input {
+#volunteer label, input {
   display:flex;
   flex-direction:column;
 }
@@ -555,9 +555,11 @@ main {
 }
 
 #volunteer_name_form {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto;
 }
 
 #volunteer_contact_form {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto;
 }

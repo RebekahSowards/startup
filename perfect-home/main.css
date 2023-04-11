@@ -1,0 +1,136 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-width: 375px;
+}
+
+header {
+    flex: 0 80px;
+}
+
+main {
+    flex: 1 calc(100vh - 110px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+footer {
+    flex: 0 30px;
+}
+
+menu {
+    flex: 1;
+    display: flex;
+    /* overwrite Bootstrap so the menu does not wrap */
+    flex-direction: row !important;
+    list-style: none;
+}
+
+.navbar-brand {
+    padding-left: 0.3em;
+    border-bottom: solid rgb(182, 182, 182) thin;
+}
+
+menu .nav-item {
+    padding: 0 0.3em;
+}
+
+footer a {
+    float: right;
+}
+
+#count {
+    color: rgb(246, 239, 158);
+}
+
+.players {
+    flex: 1;
+    width: 100%;
+    padding: 0.5em;
+}
+
+.player-name {
+    color: rgb(118, 190, 210);
+}
+
+.game-name {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.card-container {
+    height: 500px;
+    display: grid;   
+    grid-template-rows: auto auto;
+    grid-auto-columns: 200px;
+    grid-auto-rows: 200px;
+    grid-gap: 1em;
+    grid-auto-flow: column;
+}
+
+.effect {
+    border-radius: 4px;
+}
+
+.back-effect {
+    width: max-content;
+    padding: 10px;
+    position: absolute;
+    right: 0;
+}
+
+.number {
+    color: black;
+    position: absolute;
+    left: 45%;
+    top: 40%;
+    font-size: 36px;
+}
+
+.front-effect {
+    width: max-content;
+    padding: 10px;
+    position: absolute;
+    left: 41%;
+    top: 41%;
+    -webkit-transform: scale(2, 2);
+    -moz-transform: scale(2, 2);
+    -o-transform: scale(2, 2);
+    transform: scale(2, 2);
+}
+
+.card {
+    height: 200px;
+    width: 200px;
+}
+
+.blank {
+    font-size: 2px;
+    color: white;
+}
+
+@media (orientation: portrait) {
+    .card-container {
+        grid-template-columns: auto auto;
+        grid-auto-columns: 200px;
+        grid-auto-rows: 200px;
+        grid-gap: 1em;
+        grid-auto-flow: row;
+        column-fill: row;
+    }
+}
+
+@media (max-height: 600px) {
+    header {
+        display: none;
+    }
+    footer {
+        display: none;
+    }
+    main {
+        flex: 1 100vh;
+    }
+}
