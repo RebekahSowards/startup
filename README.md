@@ -1,21 +1,36 @@
 # startup
 My startup project for BYU CS 260 (Web Programming)
 
-The Peoria Area Community Festival of Nativities is a non-profit organization dedicated to creating an experience that allows people to reflect on the Savior in their observance of Christmas.
-People living in the Peoria area and elsewhere lend their nativities to be displayed at the festival. 
-I intend to create a website with an organized, integrated nativity registration and volunteer experience.
-The main goals:
-1. Maintainability -- The people who will be in charge of maintaining the website over time do not have in-depth knowledge of programming and need easy tools to maintain the site.
-2. Easy to use -- Many people with varying levels of comfort with technology provide nativities and volunteer hours for the festival, ad the website needs to be accessible for all of them.
-
-![Nativity Registration Page mockup](/assets/images/mockup1.jpg)
-
+The "flip and write" game "Welcome to Your Perfect Home" can be played synchronously by up to 100 people and is ideal for a remote FHE experience; however, it does present some logistical issues when players are in multiple locations.
+My webapp is a card generator designed to make the experience seamless.
+Players in multiple locations see the same cards at the same time, and cards only advance when all players signal that they are done. 
+This makes it easier to enjoy family night together!
+(A note -- my family plays this remotely, but each household has its own copy of the game. I respect the IP in this game, and I intend to implement only the features required to make it easier to play remotely, not any features that would infringe on the creators' rights.)
 Key Features:
- - Personalized nativity dashboard with all registered nativities, important dates, and to-dos. 
- - Administrator-specific pages to do things like send emails, retrieve information about all registered nativities, etc.
- - Button-activated scripts to perform key administrator tasks.
-   + (I don't know yet what all of these tasks will be, and I need to talk to my mom about what features she needs. At least one of them will be to switch the website from an active mode to a dormant mode. Because the Community Festival of Nativities is a seasonal event, many of the features of the website should only be accessible for part of the year, especially if a reduced version of the server will have a lower operating cost in off-season months.)
+- A randomized card generator to simulate a game of "Welcome to Your Perfect Home"
+- A button for players to indicate that they are finished, so that cards only advance after all players have finished their turn
+- A record of games played in the past, with the winner and winning score for each
+- An API to reference cards used in previous turns
+
+![Card Generator Page mockup](/assets/images/mockup2.jpg)
    
+TODO:
+1. New mockup image for card generator
+2. Add login page and score page to Perfect Home
+3. Turn in Perfect Home JS checkpoint
+4. Simon MongoDB assignment
+5. Simon Login
+6. Simon WebSocket
+7. Perfect Home service 
+    - WebSocket (for the card advancing)
+    - MongoDB (for the high scores)
+    - API (for getting old scores)
+    - Login
+    - IN THAT ORDER (By importance to functionality)
+8. Simon React
+9. Perfect Home React
+10. If we get to this point, we'll evaluate what else we need to do...
+
 Good documentation is essential to a successful project.
 Clear instructions make assignments easier to complete.
 
