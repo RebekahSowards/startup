@@ -52,3 +52,6 @@ Assignments:
     - Every script must be linked in a <script/> tag so that the HTML can find the code to connect to.
     - Everything you want to change has to be found in the DOM somehow, good unique tags are the easiest way to do that.
     - Tables are easy to make! That will make some aspects of my life a lot easier!
+11. Simon Service
+    - The express package makes it really easy to deploy an API service from the same server as your website.
+    - I learned how to use npm a little bit!
