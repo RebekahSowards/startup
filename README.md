@@ -19,7 +19,9 @@ TODO:
 2. Add login page and score page to Perfect Home
 3. Turn in Perfect Home JS checkpoint
 4. Simon MongoDB assignment
+    - DONE
 5. Simon Login
+    - DONE
 6. Simon WebSocket
 7. Perfect Home service 
     - WebSocket (for the card advancing)
@@ -73,3 +75,10 @@ Assignments:
 12. Simon DB
     - Credentials can be securely stored as environment variables in the production environment.
     - The "require" statement can be used to reference other JS files for good modularity.
+13. Simon Login
+    - The essential components of a login service
+      a. Account creation
+      b. Hashed passwords for security
+      c. Login that returns an auth token cookie
+      d. Checking for the auth token on secure portions of the API
+      e. Some sort of logout (timeout or other)
