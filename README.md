@@ -70,3 +70,6 @@ Assignments:
 11. Simon Service
     - The express package makes it really easy to deploy an API service from the same server as your website.
     - I learned how to use npm a little bit!
+12. Simon DB
+    - Credentials can be securely stored as environment variables in the production environment.
+    - The "require" statement can be used to reference other JS files for good modularity.
