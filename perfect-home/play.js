@@ -59,12 +59,18 @@ class Effect {
 }
 
 class Game {
+    seed;
+    rand;
     deck1;
     deck2;
     deck3;
     cardIndex;
   
     constructor() {
+        this.seed = Math.random();
+        this.rand = this.mulberry32Rand(this.seed);
+        console.log(this.seed);
+
         this.divideCards();
         this.cardIndex = 0;
         const cardContainerDivEl = document.querySelector('.card-container');
@@ -75,9 +81,28 @@ class Game {
         cardContainerDivEl.appendChild(blankCard.generateEffectSide());
         cardContainerDivEl.appendChild(this.deck3[0].generateNumberSide());
         cardContainerDivEl.appendChild(blankCard.generateEffectSide());
+
+        const playerNameEl = document.querySelector('.player-name');
+        playerNameEl.textContent = this.getPlayerName();
+    }
+
+    mulberry32Rand(a) {
+        return function() {
+          var t = a += 0x6D2B79F5;
+          t = Math.imul(t ^ t >>> 15, t | 1);
+          t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+          return ((t ^ t >>> 14) >>> 0) / 4294967296;
+        }
+    }
+
+    allAdvance() {
+        return true; // This is where the websocket will go, if all players advance then cards are advanced, if one player ends game then the game ends for all.
     }
 
     advanceCards() {
+        if (!await this.allAdvance()) {
+            this.endGame();
+        }
         const cardContainerDivEl = document.querySelector('.card-container');
 
         while (cardContainerDivEl.firstChild) {
@@ -121,7 +146,7 @@ class Game {
         while (currentIndex != 0) {
       
           // Pick a remaining element.
-          randomIndex = Math.floor(Math.random() * currentIndex);
+          randomIndex = Math.floor(this.rand() * currentIndex);
           currentIndex--;
       
           // And swap it with the current element.
@@ -139,15 +164,40 @@ class Game {
         this.deck3 = shuffledCards.slice(shuffledCards.length * 2/3, shuffledCards.length);
         console.log(this.deck3);
     }
-    
+
+    getPlayerName() {
+        return localStorage.getItem('userName') ?? 'Mystery player';
+    }
+
+    addPlayer(playerName) {
+        const otherPlayersDivEl = document.querySelector('#other-players');
+        const playerSpanEl = document.createElement("span");
+
+        playerSpanEl.textContent = playerName;
+        playerSpanEl.classList.add("player-name");
+
+        otherPlayersDivEl.appendChild(playerSpanEl);
+    }
+
+    leaveGame() {
+        //This is for the websocket; it removes one player from the room and allows the game to advance without them.
+    }
+
+    endGame() {
+        const cardContainerDivEl = document.querySelector('.game');
+
+        while (cardContainerDivEl.firstChild) {
+            cardContainerDivEl.removeChild(cardContainerDivEl.firstChild);
+        }
+    }
 }
 
 const fenceEffect = new Effect("icons/bricks.svg", "lightgray");
-const investEffect = new Effect("icons/graph-up-arrow.svg", "purple");
-const parkEffect = new Effect("icons/tree.svg", "green");
-const poolEffect = new Effect("icons/water.svg", "blue");
+const investEffect = new Effect("icons/graph-up-arrow.svg", "mediumpurple");
+const parkEffect = new Effect("icons/tree.svg", "seagreen");
+const poolEffect = new Effect("icons/water.svg", "steelblue");
 const constructionEffect = new Effect("icons/cone-striped.svg", "orange");
-const bisEffect = new Effect("icons/envelope.svg", "red");
+const bisEffect = new Effect("icons/envelope.svg", "crimson");
 const blankEffect = new Effect("", "white");
 
 const blankCard = new Card(0, blankEffect);

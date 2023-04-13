@@ -45,8 +45,13 @@ footer a {
     color: rgb(246, 239, 158);
 }
 
+.modal {
+    color: black;
+}
+
 .players {
     flex: 1;
+    max-height:100px;
     width: 100%;
     padding: 0.5em;
 }
@@ -73,6 +78,7 @@ footer a {
 
 .effect {
     border-radius: 4px;
+    opacity: .9;
 }
 
 .back-effect {
@@ -112,6 +118,10 @@ footer a {
     color: white;
 }
 
+#advance {
+    margin: 10px 0px;
+}
+
 @media (orientation: portrait) {
     .card-container {
         grid-template-columns: auto auto;
@@ -121,6 +131,7 @@ footer a {
         grid-auto-flow: row;
         column-fill: row;
     }
+
 }
 
 @media (max-height: 600px) {

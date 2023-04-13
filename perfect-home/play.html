@@ -2,21 +2,19 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <!-- Tell browsers not to scale the viewport automatically -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Perfect Home</title>
-        <link rel="icon" href="favicon.ico" />
+        <link rel="icon" type="image/svg+xml" href="icons/house-door-fill.svg" alt="Bootstrap" />
 
+        <script src="login.js"></script>
         <link rel="stylesheet" href="main.css" />
 
-        <!-- Include bootstrap CSS framework -->
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
             rel="stylesheet"
             integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
             crossorigin="anonymous"
         />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css"/>
     </head>
     <body class="bg-dark text-light">
         <header class="container-fluid">
@@ -30,16 +28,21 @@
                         <a class="nav-link active" href="play.html">Play</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
+                        <a class="nav-link" href="scores.html">Scores</a>
                     </li>
                 </menu>
             </nav>
         </header>
 
-        <main class="bg-secondary">
+        <main class="bg-secondary" id="play">
             <div class="players">
                 Player:
                 <span class="player-name">Mystery player</span>
+                <div id="other-players">
+                    Other players:
+                    <span class="player-name">Mystery player</span>
+                    <span class="player-name">Mystery player</span>
+                </div>
             </div>
             <div class="game">
                 <div class="card-container">
@@ -83,22 +86,39 @@
                         </div>
                     </div> -->
                 </div>
-                <button onclick="game.advanceCards()">Advance Cards</button>
+                <button id="advance" class="btn btn-primary" onclick="game.advanceCards()">Advance Cards</button>
+                <div class="bd-example">
+                    <div class="modal fade" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLiveLabel">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <p>Are you sure you want to end the game for all players?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick="game.leaveGame()">Leave Game</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="game.endGame()">End Game</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalLive">
+                      End Game
+                    </button>
+                  </div>
             </div>
         </main>
 
         <footer class="bg-dark text-dark text-muted">
-            <div class="container-fluid">
-                <span class="text-reset">Rebekah Sowards</span>
-                <a
-                    class="text-reset"
-                    href="https://github.com/RebekahSowards/simon"
-                    >Source</a
-                >
-            </div>
+
         </footer>
 
         <!-- Script is located at the bottom because it references HTML elements during initialization -->
         <script src="play.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>
 </html>
