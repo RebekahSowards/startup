@@ -109,7 +109,13 @@
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalLive">
                       End Game
                     </button>
-                  </div>
+                </div>
+            </div>
+            <div id="score-submit" style="visibility:hidden">
+                <form method="get" action="play.html">
+                    <input type="text" id="score" placeholder="Enter your score"/>
+                    <button type="submit" class="btn btn-primary" onclick="game.scoreSubmit()">Submit Score</button>
+                </form>
             </div>
         </main>
 

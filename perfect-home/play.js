@@ -95,13 +95,17 @@ class Game {
         }
     }
 
-    allAdvance() {
+    allAdvance(end = false) {
+        if (end) {
+            //communicate end to all players
+        }
         return true; // This is where the websocket will go, if all players advance then cards are advanced, if one player ends game then the game ends for all.
     }
 
-    advanceCards() {
-        if (!await this.allAdvance()) {
-            this.endGame();
+    async advanceCards() {
+        const cont = await this.allAdvance();
+        if (!cont) {
+            this.endGame(true);
         }
         const cardContainerDivEl = document.querySelector('.card-container');
 
@@ -183,12 +187,55 @@ class Game {
         //This is for the websocket; it removes one player from the room and allows the game to advance without them.
     }
 
-    endGame() {
-        const cardContainerDivEl = document.querySelector('.game');
-
-        while (cardContainerDivEl.firstChild) {
-            cardContainerDivEl.removeChild(cardContainerDivEl.firstChild);
+    async endGame(otherPlayer = false) {
+        if (!otherPlayer) {
+            await this.allAdvance(true);
         }
+        const gameDivEl = document.querySelector('.game');
+        gameDivEl.style.display = "none";
+        
+        const scoreSubmitDivEl = document.querySelector('#score-submit');
+        scoreSubmitDivEl.style.visibility = "visible";
+    }
+
+    async receiveScores() {
+
+    }
+
+    async scoreSubmit() {
+        const scoreSubmitDivEl = document.querySelector('#score-submit');
+
+        const scoreEl = document.querySelector("#score");
+        const score = { name: this.getPlayerName(), score: scoreEl.value };
+
+        while (scoreSubmitDivEl.firstChild) {
+            scoreSubmitDivEl.removeChild(scoreSubmitDivEl.firstChild);
+        }
+
+        const loadWrappDivEl = document.createElement("div");
+        const loadDivEl = document.createElement("div");
+        const textPEl = document.createElement("p");
+        const line1DivEl = document.createElement("div");
+        const line2DivEl = document.createElement("div");
+        const line3DivEl = document.createElement("div");
+
+
+        loadWrappDivEl.classList.add("load-wrapp");
+        loadDivEl.classList.add("load");
+        textPEl.textContent = "Waiting for other players' scores";
+        line1DivEl.classList.add("line");
+        line2DivEl.classList.add("line");
+        line3DivEl.classList.add("line");
+
+
+        loadDivEl.appendChild(textPEl);
+        loadDivEl.appendChild(line1DivEl);
+        loadDivEl.appendChild(line2DivEl);
+        loadDivEl.appendChild(line3DivEl);
+        loadWrappDivEl.appendChild(loadDivEl);
+        scoreSubmitDivEl.appendChild(loadWrappDivEl);
+
+        this.receiveScores(score);
     }
 }
 
