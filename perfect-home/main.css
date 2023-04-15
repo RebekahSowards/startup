@@ -121,8 +121,7 @@ footer a {
 }
 
 .blank {
-    font-size: 2px;
-    color: white;
+    display: none;
 }
 
 #score-submit {
