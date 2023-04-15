@@ -198,8 +198,42 @@ class Game {
         scoreSubmitDivEl.style.visibility = "visible";
     }
 
-    async receiveScores() {
+    async receiveScores(myScore) {
+        // get all the scores from the websocket
 
+        const scores = [{name: "Adam", score: "56" }, { name: "Logan", score: "45" }];
+        scores.push(myScore)
+        scores.sort( (s, s2) => {return parseInt(s2.score) - parseInt(s.score); });
+    
+
+        const scoreSubmitDivEl = document.querySelector("#score-submit");
+        const scoreDisplayDivEl = document.querySelector("#score-display");
+        const scoreTableEl = document.querySelector("#game-scores");
+
+        let place = 1;
+        scores.forEach((score) => {
+            const placeTdEl = document.createElement("td");
+            const nameTdEl = document.createElement("td");
+            const scoreTdEl = document.createElement("td");
+
+            placeTdEl.textContent = place;
+            nameTdEl.textContent = score.name;
+            scoreTdEl.textContent = score.score;
+
+            const rowEl = document.createElement('tr');
+            rowEl.appendChild(placeTdEl)
+            rowEl.appendChild(nameTdEl);
+            rowEl.appendChild(scoreTdEl);
+
+            scoreTableEl.appendChild(rowEl);
+            place++;
+        });
+
+        scoreSubmitDivEl.style.display = "none";
+        scoreDisplayDivEl.style.display = "block";
+
+
+        console.log(scores);
     }
 
     async scoreSubmit() {

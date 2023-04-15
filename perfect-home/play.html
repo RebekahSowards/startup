@@ -35,7 +35,7 @@
         </header>
 
         <main class="bg-secondary" id="play">
-            <div class="players">
+            <div class="game-info">
                 Player:
                 <span class="player-name">Mystery player</span>
                 <div id="other-players">
@@ -116,6 +116,19 @@
                     <input type="text" id="score" placeholder="Enter your score"/>
                     <button type="submit" class="btn btn-primary" onclick="game.scoreSubmit()">Submit Score</button>
                 </form>
+            </div>
+            <div id="score-display" class="container-fluid bg-secondary text-center" style="display: none">
+                <table class="table table-warning table-striped-columns">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Place</th>
+                            <th>Player</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="game-scores">
+                    </tbody>
+                </table>
             </div>
         </main>
 
