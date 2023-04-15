@@ -20,6 +20,7 @@ TODO:
 2. Add login page and score page to Perfect Home
     - DONE
 3. Turn in Perfect Home JS checkpoint
+    - DONE
 4. Simon MongoDB assignment
     - DONE
 5. Simon Login
