@@ -26,6 +26,7 @@ TODO:
 5. Simon Login
     - DONE
 6. Simon WebSocket
+    - DONE
 7. Perfect Home service 
     - WebSocket (for the card advancing)
     - MongoDB (for the high scores)
@@ -85,6 +86,8 @@ Assignments:
       c. Login that returns an auth token cookie
       d. Checking for the auth token on secure portions of the API
       e. Some sort of logout (timeout or other)
-14. Simon JS
+14. Startup JS
     - A lot of this is just modifying the DOM (elements, display, etc.) to show the effects of the application
     - JS behaves in some ways like any other functional language, and you can use things like arrow (lambda!) functions
+15. Simon WebSocket
+    - Peer to peer communication is enabled through websocket
