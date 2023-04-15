@@ -67,9 +67,7 @@ class Game {
     cardIndex;
   
     constructor() {
-        this.seed = Math.random();
-        this.rand = this.mulberry32Rand(this.seed);
-        console.log(this.seed);
+        this.rand = Math.random;  // I might want to seed this later to allow for viewing card order from previous games
 
         this.divideCards();
         this.cardIndex = 0;
@@ -84,15 +82,6 @@ class Game {
 
         const playerNameEl = document.querySelector('.player-name');
         playerNameEl.textContent = this.getPlayerName();
-    }
-
-    mulberry32Rand(a) {
-        return function() {
-          var t = a += 0x6D2B79F5;
-          t = Math.imul(t ^ t >>> 15, t | 1);
-          t ^= t + Math.imul(t ^ t >>> 7, t | 61);
-          return ((t ^ t >>> 14) >>> 0) / 4294967296;
-        }
     }
 
     allAdvance(end = false) {
