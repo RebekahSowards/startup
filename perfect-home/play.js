@@ -232,6 +232,7 @@ class Game {
         scoreSubmitDivEl.style.display = "none";
         scoreDisplayDivEl.style.display = "block";
 
+        this.saveGame(scores[0]);
 
         console.log(scores);
     }
@@ -270,6 +271,18 @@ class Game {
         scoreSubmitDivEl.appendChild(loadWrappDivEl);
 
         this.receiveScores(score);
+    }
+
+    saveGame(score) {
+        const scoresText = localStorage.getItem('scores');
+        let pastScores = [];
+        if (scoresText) {
+            pastScores = JSON.parse(scoresText);
+        }
+        
+        pastScores.splice(0, 0, { date : new Date().toLocaleDateString(), winner : score.name, score : score.score, });
+
+        localStorage.setItem('scores', JSON.stringify(pastScores));
     }
 }
 
