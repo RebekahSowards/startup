@@ -16,7 +16,9 @@ Key Features:
    
 TODO:
 1. New mockup image for card generator
+    - DONE
 2. Add login page and score page to Perfect Home
+    - DONE
 3. Turn in Perfect Home JS checkpoint
 4. Simon MongoDB assignment
     - DONE
@@ -82,3 +84,6 @@ Assignments:
       c. Login that returns an auth token cookie
       d. Checking for the auth token on secure portions of the API
       e. Some sort of logout (timeout or other)
+14. Simon JS
+    - A lot of this is just modifying the DOM (elements, display, etc.) to show the effects of the application
+    - JS behaves in some ways like any other functional language, and you can use things like arrow (lambda!) functions
