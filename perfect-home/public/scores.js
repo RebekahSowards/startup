@@ -1,10 +1,21 @@
-function loadScores() {
+async function loadScores() {
     let scores = [];
-    const scoresText = localStorage.getItem('scores');
-    if (scoresText) {
-        scores = JSON.parse(scoresText);
+    try {
+        const response = await fetch('//api/scores');
+        scores = await response.json();
+
+        localStorage.setItem('scores', JON.stringify(scores));
+    } catch {
+        const scoresText = localStorage.getItem('scores');
+        if (scoresText) {
+            scores = JSON.parse(scoresText);
+        }
     }
 
+    displayScores(scores);
+}
+
+function displayScores(scores) {
     const tableBodyEl = document.querySelector('#scores');
 
     if (scores.length) {

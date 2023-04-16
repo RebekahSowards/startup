@@ -71,7 +71,7 @@ class Game {
 
         this.divideCards();
         this.cardIndex = 0;
-        const cardContainerDivEl = document.querySelector('.card-container');
+        const cardContainerDivEl = document.querySelector(".card-container");
 
         cardContainerDivEl.appendChild(this.deck1[0].generateNumberSide());
         cardContainerDivEl.appendChild(blankCard.generateEffectSide());
@@ -80,7 +80,7 @@ class Game {
         cardContainerDivEl.appendChild(this.deck3[0].generateNumberSide());
         cardContainerDivEl.appendChild(blankCard.generateEffectSide());
 
-        const playerNameEl = document.querySelector('.player-name');
+        const playerNameEl = document.querySelector(".player-name");
         playerNameEl.textContent = this.getPlayerName();
     }
 
@@ -96,7 +96,7 @@ class Game {
         if (!cont) {
             this.endGame(true);
         }
-        const cardContainerDivEl = document.querySelector('.card-container');
+        const cardContainerDivEl = document.querySelector(".card-container");
 
         while (cardContainerDivEl.firstChild) {
             cardContainerDivEl.removeChild(cardContainerDivEl.firstChild);
@@ -159,11 +159,11 @@ class Game {
     }
 
     getPlayerName() {
-        return localStorage.getItem('userName') ?? 'Mystery player';
+        return localStorage.getItem("userName") ?? "Mystery player";
     }
 
     addPlayer(playerName) {
-        const otherPlayersDivEl = document.querySelector('#other-players');
+        const otherPlayersDivEl = document.querySelector("#other-players");
         const playerSpanEl = document.createElement("span");
 
         playerSpanEl.textContent = playerName;
@@ -180,10 +180,10 @@ class Game {
         if (!otherPlayer) {
             await this.allAdvance(true);
         }
-        const gameDivEl = document.querySelector('.game');
+        const gameDivEl = document.querySelector(".game");
         gameDivEl.style.display = "none";
         
-        const scoreSubmitDivEl = document.querySelector('#score-submit');
+        const scoreSubmitDivEl = document.querySelector("#score-submit");
         scoreSubmitDivEl.style.visibility = "visible";
     }
 
@@ -209,7 +209,7 @@ class Game {
             nameTdEl.textContent = score.name;
             scoreTdEl.textContent = score.score;
 
-            const rowEl = document.createElement('tr');
+            const rowEl = document.createElement("tr");
             rowEl.appendChild(placeTdEl)
             rowEl.appendChild(nameTdEl);
             rowEl.appendChild(scoreTdEl);
@@ -227,7 +227,7 @@ class Game {
     }
 
     async scoreSubmit() {
-        const scoreSubmitDivEl = document.querySelector('#score-submit');
+        const scoreSubmitDivEl = document.querySelector("#score-submit");
 
         const scoreEl = document.querySelector("#score");
         const score = { name: this.getPlayerName(), score: scoreEl.value };
@@ -262,25 +262,46 @@ class Game {
         this.receiveScores(score);
     }
 
-    saveGame(score) {
-        const scoresText = localStorage.getItem('scores');
-        let pastScores = [];
-        if (scoresText) {
-            pastScores = JSON.parse(scoresText);
+    async saveGame(score) {
+        const newScore = { date : new Date().toLocaleDateString(), winner : score.name, score : score.score };
+        try {
+            const response = await fetch("/api/score", {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify(newScore),
+            });
+    
+            // Store what the service gave us as the recent scores
+            const scores = await response.json();
+            localStorage.setItem("scores", JSON.stringify(scores));
+        } catch {
+            // If there was an error then just track scores locally
+            this.updateScoresLocal(newScore);
         }
-        
-        pastScores.splice(0, 0, { date : new Date().toLocaleDateString(), winner : score.name, score : score.score, });
+    }
 
-        localStorage.setItem('scores', JSON.stringify(pastScores));
+    updateScoresLocal(newScore) {
+        let scores = [];
+        const scoresText = localStorage.getItem("scores");
+        if (scoresText) {
+            scores = JSON.parse(scoresText);
+        }
+    
+        scores.unshift(newScore);
+        while (scores.length > 10) {
+            scores.pop();
+        }
+
+        localStorage.setItem("scores", JSON.stringify(scores));
     }
 }
 
-const fenceEffect = new Effect("icons/bricks.svg", "lightgray");
-const investEffect = new Effect("icons/graph-up-arrow.svg", "mediumpurple");
-const parkEffect = new Effect("icons/tree.svg", "seagreen");
-const poolEffect = new Effect("icons/water.svg", "steelblue");
-const constructionEffect = new Effect("icons/cone-striped.svg", "orange");
-const bisEffect = new Effect("icons/envelope.svg", "crimson");
+const fenceEffect = new Effect("assets/icons/bricks.svg", "lightgray");
+const investEffect = new Effect("assets/icons/graph-up-arrow.svg", "mediumpurple");
+const parkEffect = new Effect("assets/icons/tree.svg", "seagreen");
+const poolEffect = new Effect("assets/icons/water.svg", "steelblue");
+const constructionEffect = new Effect("assets/icons/cone-striped.svg", "orange");
+const bisEffect = new Effect("assets/icons/envelope.svg", "crimson");
 const blankEffect = new Effect("", "white");
 
 const blankCard = new Card(0, blankEffect);
@@ -370,10 +391,3 @@ const cards = [
 ];
   
 const game = new Game();
-
-  
-
-
-
-
-
