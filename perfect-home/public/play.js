@@ -1,3 +1,11 @@
+// Event messages
+const JoinGameEvent = 'joinGame';
+const LeaveGameEvent = 'leaveGame';
+const AnnouncePlayerEvent = 'announcePlayer';
+const EndGameEvent = 'endGame';
+const AdvanceCardsEvent = 'advanceCards';
+const ShareScoreEvent = 'shareScore';
+
 class Card {
     constructor(number, effect) {
         this.number = number;
@@ -65,6 +73,11 @@ class Game {
     deck2;
     deck3;
     cardIndex;
+    playerName;
+    socket;
+    playerInfo;
+    gameEnd;
+    scores;
   
     constructor() {
         this.rand = Math.random;  // I might want to seed this later to allow for viewing card order from previous games
@@ -80,22 +93,39 @@ class Game {
         cardContainerDivEl.appendChild(this.deck3[0].generateNumberSide());
         cardContainerDivEl.appendChild(blankCard.generateEffectSide());
 
+        this.playerName = this.getPlayerName();
         const playerNameEl = document.querySelector(".player-name");
-        playerNameEl.textContent = this.getPlayerName();
+        playerNameEl.textContent = this.playerName;
+
+        this.configureWebSocket();
+        this.playerInfo = [{ name: this.playerName, advance: false, connected: true }];
+        this.gameEnd = false;
+        this.scores = [];
     }
 
     allAdvance(end = false) {
         if (end) {
             //communicate end to all players
+            this.broadcastEvent(userName, GameEndEvent, {});
+            return false;
+        }
+        else {
+            this.broadcastEvent(userName, AdvanceCardsEvent, {});
         }
         return true; // This is where the websocket will go, if all players advance then cards are advanced, if one player ends game then the game ends for all.
     }
 
-    async advanceCards() {
-        const cont = await this.allAdvance();
-        if (!cont) {
-            this.endGame(true);
+    async sendAdvanceMessage() {
+        this.playerInfo.forEach(player => player.name === this.playerName ? player.advance = true : void(0));
+        this.broadcastEvent(userName, AdvanceCardsEvent, {});
+        let advance = true;
+        this.playerInfo.forEach(player => advance &= player.advance);
+        if (advance) {
+            this.advanceCards();
         }
+    }
+
+    advanceCards() {
         const cardContainerDivEl = document.querySelector(".card-container");
 
         while (cardContainerDivEl.firstChild) {
@@ -172,14 +202,17 @@ class Game {
         otherPlayersDivEl.appendChild(playerSpanEl);
     }
 
-    leaveGame() {
+    async sendLeaveGameMessage() {
         //This is for the websocket; it removes one player from the room and allows the game to advance without them.
     }
 
-    async endGame(otherPlayer = false) {
-        if (!otherPlayer) {
-            await this.allAdvance(true);
-        }
+    async sendEndGameMessage() {
+        this.gameEnd = true;
+        this.broadcastEvent(this.playerName, EndGameEvent, {});
+        this.endGame();
+    }
+
+    endGame() {
         const gameDivEl = document.querySelector(".game");
         gameDivEl.style.display = "none";
         
@@ -187,8 +220,8 @@ class Game {
         scoreSubmitDivEl.style.visibility = "visible";
     }
 
-    async receiveScores(myScore) {
-        // get all the scores from the websocket
+    displayScores(myScore) {
+        // run anytime the scores are updated
 
         const scores = [{name: "Adam", score: "56" }, { name: "Logan", score: "45" }];
         scores.push(myScore)
@@ -293,6 +326,67 @@ class Game {
         }
 
         localStorage.setItem("scores", JSON.stringify(scores));
+    }
+
+    // Functionality for peer communication using WebSocket
+
+    configureWebSocket() {
+        const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+        this.socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+        this.socket.onopen = (event) => {
+            this.displayMsg('system', 'game', 'connected');
+        };
+        this.socket.onclose = (event) => {
+            this.displayMsg('system', 'game', 'disconnected');
+        };
+        this.socket.onmessage = async (event) => {
+            const msg = JSON.parse(await event.data.text());
+            if (msg.gameID !== this.gameID) {
+                return;
+            }
+            if (msg.type == JoinGameEvent) {
+                this.playerInfo.push({ name: msg.from, advance: false, connected: true });  // always add player to playerInfo array
+                this.broadcastEvent(this.getPlayerName(), AnnouncePlayerEvent, {});  // announce yourself to the new player
+            } else if (msg.type == LeaveGameEvent) {
+                this.playerInfo = this.playerInfo.filter(player => player.name != msg.from);  // remove player from the playerInfo array
+            } else if (msg.type == AnnouncePlayerEvent) {
+                let found = false;
+                this.playerInfo.forEach(player => player.name === msg.from ? found = true : found |= false);  // check the playerInfo array for this player's info
+                if (!found) {
+                    this.playerInfo.push({ name: msg.from, advance: false, connected: true });  // if you don't have it, add it
+                }
+            } else if (msg.type == EndGameEvent) {
+                this.gameEnd = true;
+                let advance = false;
+                this.playerInfo.forEach(player => player.name === this.getPlayerName() ? advance = player.advance : void(0));
+                if (advance) {
+                // if your advance cards is true in playerinfo, move to scoring page
+                }
+            } else if (msg.type == AdvanceCardsEvent) {
+                if (this.gameEnd) {
+                    return;
+                }
+                this.playerInfo.forEach(player => player.name === msg.from ? player.advance = true : void(0));  // set the advancecards variable to true in the object corresponding to the sender
+                let advance = true;
+                this.playerInfo.forEach(player => advance &= player.advance);
+                if (advance) {
+                // if all advancecards are true, advance the cards
+                }
+            } else if (msg.type == ShareScoreEvent) {
+                this.scores.push({ name: msg.from, score: msg.value.score });  // add this player's score to the array of player scores
+                // update the scores display if you've submitted a score (leave this check to displayScores?)
+            }
+        };
+    }
+
+    broadcastEvent(from, type, value) {
+        const event = {
+            from: from,
+            type: type,
+            gameID: this.gameID,
+            value: value,
+        };
+        this.socket.send(JSON.stringify(event));
     }
 }
 
