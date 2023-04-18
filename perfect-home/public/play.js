@@ -75,12 +75,13 @@ class Game {
     cardIndex;
     playerName;
     socket;
+    gameSeed;
     playerInfo;
     gameEnd;
     scores;
   
     constructor() {
-        this.rand = Math.random;  // I might want to seed this later to allow for viewing card order from previous games
+        this.rand = new Math.seedrandom(this.getGameSeed);
 
         this.divideCards();
         this.cardIndex = 0;
@@ -98,26 +99,15 @@ class Game {
         playerNameEl.textContent = this.playerName;
 
         this.configureWebSocket();
+        this.gameSeed = this.getGameSeed();
         this.playerInfo = [{ name: this.playerName, advance: false, connected: true }];
         this.gameEnd = false;
         this.scores = [];
     }
 
-    allAdvance(end = false) {
-        if (end) {
-            //communicate end to all players
-            this.broadcastEvent(userName, GameEndEvent, {});
-            return false;
-        }
-        else {
-            this.broadcastEvent(userName, AdvanceCardsEvent, {});
-        }
-        return true; // This is where the websocket will go, if all players advance then cards are advanced, if one player ends game then the game ends for all.
-    }
-
     async sendAdvanceMessage() {
         this.playerInfo.forEach(player => player.name === this.playerName ? player.advance = true : void(0));
-        this.broadcastEvent(userName, AdvanceCardsEvent, {});
+        this.broadcastEvent(this.playerName, AdvanceCardsEvent, {});
         let advance = true;
         this.playerInfo.forEach(player => advance &= player.advance);
         if (advance) {
@@ -160,6 +150,8 @@ class Game {
             cardContainerDivEl.appendChild(this.deck3[this.cardIndex].generateNumberSide());
             cardContainerDivEl.appendChild(this.deck3[this.cardIndex-1].generateEffectSide());
         }
+
+        this.playerInfo.forEach(player => player.advance = false);
     }
 
     shuffle(array) {
@@ -188,11 +180,17 @@ class Game {
         console.log(this.deck3);
     }
 
+    getGameSeed() {
+        return localStorage.getItem("game-seed") ?? "random";
+    }
+
     getPlayerName() {
         return localStorage.getItem("userName") ?? "Mystery player";
     }
 
     addPlayer(playerName) {
+        this.playerInfo.push({ name: playerName, advance: false, connected: true });  
+
         const otherPlayersDivEl = document.querySelector("#other-players");
         const playerSpanEl = document.createElement("span");
 
@@ -203,6 +201,7 @@ class Game {
     }
 
     async sendLeaveGameMessage() {
+        this.broadcastEvent(this.playerName, LeaveGameEvent, {});
         //This is for the websocket; it removes one player from the room and allows the game to advance without them.
     }
 
@@ -222,10 +221,7 @@ class Game {
 
     displayScores(myScore) {
         // run anytime the scores are updated
-
-        const scores = [{name: "Adam", score: "56" }, { name: "Logan", score: "45" }];
-        scores.push(myScore)
-        scores.sort( (s, s2) => {return parseInt(s2.score) - parseInt(s.score); });
+        this.scores.sort( (s, s2) => {return parseInt(s2.score) - parseInt(s.score); });
     
 
         const scoreSubmitDivEl = document.querySelector("#score-submit");
@@ -233,7 +229,7 @@ class Game {
         const scoreTableEl = document.querySelector("#game-scores");
 
         let place = 1;
-        scores.forEach((score) => {
+        this.scores.forEach((score) => {
             const placeTdEl = document.createElement("td");
             const nameTdEl = document.createElement("td");
             const scoreTdEl = document.createElement("td");
@@ -254,45 +250,48 @@ class Game {
         scoreSubmitDivEl.style.display = "none";
         scoreDisplayDivEl.style.display = "block";
 
-        this.saveGame(scores[0]);
+        //this.saveGame(scores[0]);
 
-        console.log(scores);
+        console.log(this.scores);
     }
 
     async scoreSubmit() {
         const scoreSubmitDivEl = document.querySelector("#score-submit");
 
         const scoreEl = document.querySelector("#score");
-        const score = { name: this.getPlayerName(), score: scoreEl.value };
+        const score = { name: this.playerName, score: scoreEl.value };
 
         while (scoreSubmitDivEl.firstChild) {
             scoreSubmitDivEl.removeChild(scoreSubmitDivEl.firstChild);
         }
 
-        const loadWrappDivEl = document.createElement("div");
-        const loadDivEl = document.createElement("div");
-        const textPEl = document.createElement("p");
-        const line1DivEl = document.createElement("div");
-        const line2DivEl = document.createElement("div");
-        const line3DivEl = document.createElement("div");
+        this.broadcastEvent(this.playerName, ShareScoreEvent, score);
+        this.scores.push(score);
 
+        if ((this.scores.length == 1) && (this.playerInfo.length > 1)) {
+            const loadWrappDivEl = document.createElement("div");
+            const loadDivEl = document.createElement("div");
+            const textPEl = document.createElement("p");
+            const line1DivEl = document.createElement("div");
+            const line2DivEl = document.createElement("div");
+            const line3DivEl = document.createElement("div");
 
-        loadWrappDivEl.classList.add("load-wrapp");
-        loadDivEl.classList.add("load");
-        textPEl.textContent = "Waiting for other players' scores";
-        line1DivEl.classList.add("line");
-        line2DivEl.classList.add("line");
-        line3DivEl.classList.add("line");
+            loadWrappDivEl.classList.add("load-wrapp");
+            loadDivEl.classList.add("load");
+            textPEl.textContent = "Waiting for other players' scores";
+            line1DivEl.classList.add("line");
+            line2DivEl.classList.add("line");
+            line3DivEl.classList.add("line");
 
-
-        loadDivEl.appendChild(textPEl);
-        loadDivEl.appendChild(line1DivEl);
-        loadDivEl.appendChild(line2DivEl);
-        loadDivEl.appendChild(line3DivEl);
-        loadWrappDivEl.appendChild(loadDivEl);
-        scoreSubmitDivEl.appendChild(loadWrappDivEl);
-
-        this.receiveScores(score);
+            loadDivEl.appendChild(textPEl);
+            loadDivEl.appendChild(line1DivEl);
+            loadDivEl.appendChild(line2DivEl);
+            loadDivEl.appendChild(line3DivEl);
+            loadWrappDivEl.appendChild(loadDivEl);
+            scoreSubmitDivEl.appendChild(loadWrappDivEl);
+        } else {
+            this.displayScores();
+        }
     }
 
     async saveGame(score) {
@@ -331,21 +330,25 @@ class Game {
     // Functionality for peer communication using WebSocket
 
     configureWebSocket() {
+        console.log("configure socket");
         const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
         this.socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
         this.socket.onopen = (event) => {
-            this.displayMsg('system', 'game', 'connected');
+            console.log("ready");
+            this.broadcastEvent(this.playerName, JoinGameEvent, {});
+            //this.displayMsg('system', 'game', 'connected');
         };
         this.socket.onclose = (event) => {
-            this.displayMsg('system', 'game', 'disconnected');
+            //this.displayMsg('system', 'game', 'disconnected');
         };
         this.socket.onmessage = async (event) => {
             const msg = JSON.parse(await event.data.text());
-            if (msg.gameID !== this.gameID) {
+            console.log(msg);
+            if (msg.gameSeed !== this.gameSeed) {
                 return;
             }
             if (msg.type == JoinGameEvent) {
-                this.playerInfo.push({ name: msg.from, advance: false, connected: true });  // always add player to playerInfo array
+                this.addPlayer(msg.from);  // always add player to playerInfo array
                 this.broadcastEvent(this.getPlayerName(), AnnouncePlayerEvent, {});  // announce yourself to the new player
             } else if (msg.type == LeaveGameEvent) {
                 this.playerInfo = this.playerInfo.filter(player => player.name != msg.from);  // remove player from the playerInfo array
@@ -353,14 +356,14 @@ class Game {
                 let found = false;
                 this.playerInfo.forEach(player => player.name === msg.from ? found = true : found |= false);  // check the playerInfo array for this player's info
                 if (!found) {
-                    this.playerInfo.push({ name: msg.from, advance: false, connected: true });  // if you don't have it, add it
+                    this.addPlayer(msg.from);  // if you don't have it, add it
                 }
             } else if (msg.type == EndGameEvent) {
                 this.gameEnd = true;
                 let advance = false;
                 this.playerInfo.forEach(player => player.name === this.getPlayerName() ? advance = player.advance : void(0));
                 if (advance) {
-                // if your advance cards is true in playerinfo, move to scoring page
+                    this.endGame();  // if your advance cards is true in playerinfo, move to scoring page
                 }
             } else if (msg.type == AdvanceCardsEvent) {
                 if (this.gameEnd) {
@@ -370,11 +373,15 @@ class Game {
                 let advance = true;
                 this.playerInfo.forEach(player => advance &= player.advance);
                 if (advance) {
-                // if all advancecards are true, advance the cards
+                    this.advanceCards();  // if all advancecards are true, advance the cards
                 }
             } else if (msg.type == ShareScoreEvent) {
                 this.scores.push({ name: msg.from, score: msg.value.score });  // add this player's score to the array of player scores
-                // update the scores display if you've submitted a score (leave this check to displayScores?)
+                let found = false;
+                this.scores.forEach(score => score.name === this.playerName ? found = true : found |= false);
+                if (found) {
+                    this.displayScores();  // update the scores display if you've submitted a score
+                }
             }
         };
     }
@@ -383,9 +390,10 @@ class Game {
         const event = {
             from: from,
             type: type,
-            gameID: this.gameID,
+            gameSeed: this.gameSeed,
             value: value,
         };
+        console.log(event);
         this.socket.send(JSON.stringify(event));
     }
 }

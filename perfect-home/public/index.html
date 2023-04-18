@@ -29,6 +29,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="scores.html">Scores</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
                 </menu>
             </nav>
         </header>
@@ -66,6 +69,14 @@
                 <!-- Displayed when ready to play -->
                 <div id="playControls" style="display: none">
                     <div id="playerName"></div>
+                    <div class="input-group">
+                        <span class="input-group-text">Game passcode</span>
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="seed-word"
+                        />
+                    </div>
                     <button type="button" class="btn btn-primary" onclick="play()">
                         Play
                     </button>
