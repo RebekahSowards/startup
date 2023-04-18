@@ -74,14 +74,16 @@ class Game {
     deck3;
     cardIndex;
     playerName;
-    socket;
     gameSeed;
+    socket;
     playerInfo;
     gameEnd;
     scores;
   
     constructor() {
-        this.rand = new Math.seedrandom(this.getGameSeed);
+        console.log("building game");
+        this.rand = new Math.seedrandom(this.getGameSeed());
+        console.log(this.getGameSeed());
 
         this.divideCards();
         this.cardIndex = 0;
@@ -98,8 +100,11 @@ class Game {
         const playerNameEl = document.querySelector(".player-name");
         playerNameEl.textContent = this.playerName;
 
-        this.configureWebSocket();
         this.gameSeed = this.getGameSeed();
+        const gameIDEl = document.querySelector(".game-id");
+        gameIDEl.textContent = this.gameSeed;
+
+        this.configureWebSocket();
         this.playerInfo = [{ name: this.playerName, advance: false, connected: true }];
         this.gameEnd = false;
         this.scores = [];
@@ -181,7 +186,7 @@ class Game {
     }
 
     getGameSeed() {
-        return localStorage.getItem("game-seed") ?? "random";
+        return localStorage.getItem("seed-word") ?? "random";
     }
 
     getPlayerName() {

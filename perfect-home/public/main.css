@@ -56,8 +56,12 @@ footer a {
     padding: 0.5em;
 }
 
+.game-id {
+    color: orange;
+}
+
 .player-name {
-    color: rgb(118, 190, 210);
+    color: orange;
 }
 
 .game-name {

@@ -16,6 +16,7 @@
         document.querySelector("#playerName").textContent = userName;
         setDisplay("loginControls", "none");
         setDisplay("playControls", "block");
+        displayRandomSeedWord();
     } else {
         setDisplay("loginControls", "block");
         setDisplay("playControls", "none");
@@ -55,7 +56,18 @@ async function loginOrCreate(endpoint) {
     }
 }
   
+function displayRandomSeedWord() {
+    fetch("https://random-word-api.herokuapp.com/word")
+    .then((response) => response.json())
+    .then((data) => {
+        const seedWordEl = document.querySelector("#seed-word");
+        seedWordEl.value = data[0];
+    });
+}
+
 function play() {
+    const seedWordEl = document.querySelector("#seed-word");
+    localStorage.setItem("seed-word", seedWordEl.value);
     window.location.href = "play.html";
 }
   
