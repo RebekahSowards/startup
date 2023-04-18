@@ -117,6 +117,10 @@ class Game {
         this.playerInfo.forEach(player => advance &= player.advance);
         if (advance) {
             this.advanceCards();
+        } else if (this.gameEnd) {
+            this.endGame();
+        } else {
+            this.enableAdvanceButton(false);
         }
     }
 
@@ -157,6 +161,14 @@ class Game {
         }
 
         this.playerInfo.forEach(player => player.advance = false);
+
+        this.enableAdvanceButton();
+    }
+
+    enableAdvanceButton(enable = true) {
+        console.log(enable);
+        const advanceButtonEl = document.querySelector("#advance");
+        advanceButtonEl.disabled = !enable;
     }
 
     shuffle(array) {
@@ -224,10 +236,9 @@ class Game {
         scoreSubmitDivEl.style.visibility = "visible";
     }
 
-    displayScores(myScore) {
+    displayScores() {
         // run anytime the scores are updated
         this.scores.sort( (s, s2) => {return parseInt(s2.score) - parseInt(s.score); });
-    
 
         const scoreSubmitDivEl = document.querySelector("#score-submit");
         const scoreDisplayDivEl = document.querySelector("#score-display");
@@ -255,9 +266,9 @@ class Game {
         scoreSubmitDivEl.style.display = "none";
         scoreDisplayDivEl.style.display = "block";
 
-        //this.saveGame(scores[0]);
-
-        console.log(this.scores);
+        if ((this.scores[0].name === this.playerName) && (this.scores.length === this.playerInfo.length)) {
+            this.saveGame(this.scores[0]); //to prevent too many scores from being saved, only the winner submits the scores
+        }
     }
 
     async scoreSubmit() {
@@ -273,7 +284,7 @@ class Game {
         this.broadcastEvent(this.playerName, ShareScoreEvent, score);
         this.scores.push(score);
 
-        if ((this.scores.length == 1) && (this.playerInfo.length > 1)) {
+        if ((this.scores.length === 1) && (this.playerInfo.length > 1)) {
             const loadWrappDivEl = document.createElement("div");
             const loadDivEl = document.createElement("div");
             const textPEl = document.createElement("p");
@@ -307,7 +318,6 @@ class Game {
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify(newScore),
             });
-    
             // Store what the service gave us as the recent scores
             const scores = await response.json();
             localStorage.setItem("scores", JSON.stringify(scores));
@@ -352,25 +362,25 @@ class Game {
             if (msg.gameSeed !== this.gameSeed) {
                 return;
             }
-            if (msg.type == JoinGameEvent) {
+            if (msg.type === JoinGameEvent) {
                 this.addPlayer(msg.from);  // always add player to playerInfo array
                 this.broadcastEvent(this.getPlayerName(), AnnouncePlayerEvent, {});  // announce yourself to the new player
-            } else if (msg.type == LeaveGameEvent) {
+            } else if (msg.type === LeaveGameEvent) {
                 this.playerInfo = this.playerInfo.filter(player => player.name != msg.from);  // remove player from the playerInfo array
-            } else if (msg.type == AnnouncePlayerEvent) {
+            } else if (msg.type === AnnouncePlayerEvent) {
                 let found = false;
                 this.playerInfo.forEach(player => player.name === msg.from ? found = true : found |= false);  // check the playerInfo array for this player's info
                 if (!found) {
                     this.addPlayer(msg.from);  // if you don't have it, add it
                 }
-            } else if (msg.type == EndGameEvent) {
+            } else if (msg.type === EndGameEvent) {
                 this.gameEnd = true;
                 let advance = false;
                 this.playerInfo.forEach(player => player.name === this.getPlayerName() ? advance = player.advance : void(0));
                 if (advance) {
                     this.endGame();  // if your advance cards is true in playerinfo, move to scoring page
                 }
-            } else if (msg.type == AdvanceCardsEvent) {
+            } else if (msg.type === AdvanceCardsEvent) {
                 if (this.gameEnd) {
                     return;
                 }
@@ -380,7 +390,7 @@ class Game {
                 if (advance) {
                     this.advanceCards();  // if all advancecards are true, advance the cards
                 }
-            } else if (msg.type == ShareScoreEvent) {
+            } else if (msg.type === ShareScoreEvent) {
                 this.scores.push({ name: msg.from, score: msg.value.score });  // add this player's score to the array of player scores
                 let found = false;
                 this.scores.forEach(score => score.name === this.playerName ? found = true : found |= false);

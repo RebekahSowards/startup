@@ -44,7 +44,7 @@ function addScore(score) {
 }
 
 function getRecentScores() {
-    const query = {date: {$gt: 0}};
+    const query = {};
     const options = {
         sort: {date: -1},
         limit: 10,

@@ -92,16 +92,16 @@ secureApiRouter.get('/previous', (_req, res) => {
 });
 
 // GetScores
-secureApiRouter.get('/scores', async (req, res) => {
+apiRouter.get('/scores', async (req, res) => {
     const scores = await DB.getRecentScores();
     res.send(scores);
 });
 
 // SubmitScore
-secureApiRouter.post('/score', (req, res) => {
+secureApiRouter.post('/score', async (req, res) => {
     DB.addScore(req.body);
-    //const scores = await DB.getRecentScores();
-    //res.send(scores);
+    const scores = await DB.getRecentScores();
+    res.send(scores);
 });
 
 // Default error handler
